@@ -4,7 +4,7 @@ import time
 
 def check_ping():
     hostname = "google.com"
-    response = os.system("ping " + hostname)
+    response = os.system("ping -n 2 -w 500 " + hostname)
     if response == 0:
         return True
     else:
@@ -12,9 +12,12 @@ def check_ping():
 
 
 def reset_wifi():
-    os.system("netsh interface set interface name=\"Wi-Fi\" admin=disable")
-    time.sleep(5)
-    os.system("netsh interface set interface name=\"Wi-Fi\" admin=enable")
+    # Disconnect from the Wi-Fi network
+    os.system('netsh wlan disconnect')
+    time.sleep(1)
+    # Reconnect to the Wi-Fi network
+    os.system('netsh wlan connect name=VIRGIN620_5.0')
+    time.sleep(10)
 
 
 while True:
@@ -22,4 +25,4 @@ while True:
         print("Resetting...\n")
         reset_wifi()
         print("Reset complete.\n")
-    time.sleep(30)
+    time.sleep(1)
