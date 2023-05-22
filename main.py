@@ -1,5 +1,11 @@
 import os
 import time
+import json
+
+with open('info.json', 'r') as f:
+    data = json.load(f)
+
+network_name = data['networkName']
 
 
 def check_ping():
@@ -16,7 +22,7 @@ def reset_wifi():
     os.system('netsh wlan disconnect')
     time.sleep(1)
     # Reconnect to the Wi-Fi network
-    os.system('netsh wlan connect name=VIRGIN620_5.0')
+    os.system('netsh wlan connect name=' + str(network_name))
     time.sleep(10)
 
 
