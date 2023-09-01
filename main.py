@@ -1,6 +1,7 @@
 import os
 import time
 import json
+import subprocess
 
 with open('info.json', 'r') as f:
     data = json.load(f)
@@ -9,9 +10,10 @@ network_name = data['networkName']
 
 
 def check_ping():
-    hostname = "google.com"
-    response = os.system("ping -n 2 -w 500 " + hostname)
-    if response == 0:
+    hostname = "192.168.2.1"
+    response = subprocess.run(
+        "wsl ping -c 6 -i 0.1 -W 0.5 " + hostname, shell=True)
+    if response.returncode == 0:
         return True
     else:
         return False
@@ -31,4 +33,3 @@ while True:
         print("Resetting...\n")
         reset_wifi()
         print("Reset complete.\n")
-    time.sleep(1)
